@@ -13,7 +13,7 @@ public:
 private:
     void setEffort(int effort, bool clockwise);
     static void isr();
-    const int tolerance = 3;
+    const int tolerance = 5;
     const int PWMOutPin = 11;
     const int AIN2 = 4;
     const int AIN1 = 13;

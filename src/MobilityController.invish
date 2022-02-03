@@ -1,0 +1,14 @@
+#pragma once
+class MobilityController { 
+  public: 
+  MobilityController();
+    void lineFollow(bool (*predicate)());
+    void dimeToLine(int dir);
+    void centerOnJunct();
+    void backFromWall();
+    void drivePastLinesToT(int c);
+
+  private:
+    static const float kLight = 0.15;
+
+};
