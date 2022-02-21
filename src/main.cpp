@@ -5,7 +5,7 @@
 #include "StateManager.h"
 
 #include "RemoteConstants.h"
-#include "IRdecoder.h" 
+#include "IRdecoder.h"
 
 BlueMotor motor;
 Romi32U4ButtonB buttonB;
@@ -21,43 +21,47 @@ int motorEffort = 400;
 bool paused = false;
 
 MobilityController mobilityController;
-IRDecoder decoder(2); 
+IRDecoder decoder(2);
 
-
+//Call necisary innit methods
 void setup()
 {
   Serial.begin(9600);
   motor.setup();
   motor.reset();
   mobilityController.init();
-  decoder.init(); 
-  
-
+  decoder.init();
 }
 
-void update() {
-  mobilityController.update();
-  
-  switch(StateManager::get().getState()) {
-    case (PERMISSION):
-      if (decoder.getKeyCode() == remoteEnterSave) {
-        StateManager::get().advanceState();
-      }
+//Method for calling the statemachine updates of all the subsystems as well as the surface level update loop (handels things like waiting for permision)
+void update()
+{
+  mobilityController.update(); //Call mobility update
+
+  switch (StateManager::get().getState())
+  {
+  case (PERMISSION): //Wait for permision given via IR remote
+    if (decoder.getKeyCode() == remoteEnterSave)
+    {
+      StateManager::get().advanceState();
+    }
     break;
   };
 }
 
 void loop()
 {
-  if (decoder.getKeyCode() == remotePlayPause) {
+  //Check pausing logic
+  if (decoder.getKeyCode() == remotePlayPause)
+  {
     paused = !paused;
     mobilityController.pause();
     Serial.println(paused);
   }
 
-  if (!paused) {
+  //call update if unpaused
+  if (!paused)
+  {
     update();
-  } 
-  
+  }
 }
-

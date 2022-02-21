@@ -2,8 +2,6 @@
 #include <BlueMotor.h>
 #include <Romi32U4.h>
 
-//Yeah our brains are pretty big
-#define pwmbound(x) ((x)>400?400:((x)<-400?-400:x))
 
 int oldValue = 0;
 int newValue;
@@ -19,10 +17,12 @@ const float kP = 0.25;
 //I chode (0) so that it gets ignored but I keep track of which states are bad so I can swap it out with a flag for testing
 int EncoderMatrix [16] = {0,-1,1,(0),1,0,(0),-1,-1,(0),0,1,(0),1,-1,0};
 
+//Need to clean up some things that arent in use anymore
 BlueMotor::BlueMotor()
 {
 }
 
+//Configure inteript pins
 void BlueMotor::setup()
 {
     pinMode(PWMOutPin, OUTPUT);
@@ -40,11 +40,13 @@ void BlueMotor::setup()
     reset();
 }
 
+///Returns encoder count
 long BlueMotor::getPosition()
 {
     return count;
 }
 
+//Set encoder count to 0
 void BlueMotor::reset()
 {
     count = 0;
@@ -65,6 +67,7 @@ void BlueMotor::isr()
 //     count++;
 // }
 
+//Exposed setEffort method that uses the helper method with correct params
 void BlueMotor::setEffort(int effort)
 {
     if (effort < 0)
@@ -77,6 +80,7 @@ void BlueMotor::setEffort(int effort)
     }
 }
 
+//Set motor effort given a power 0-400 and a direction (bool)
 void BlueMotor::setEffort(int effort, bool clockwise)
 {
     if (clockwise)
@@ -97,13 +101,11 @@ void BlueMotor::setEffort(int effort, bool clockwise)
 void BlueMotor::moveTo(long target)  //Move to this encoder position within the specified
 {                                    //tolerance in the header file using proportional control
                                      //then stop
-    Serial.println(target-count);
-    while (abs((target-count)) > tolerance) {
+
+    while (abs((target-count)) > tolerance) {   //Loop until close enough to destination TODO: decide if this should be blocking
         int error = target-count;
-        setEffort(kP*error+(error>0?100:-100));
+        setEffort(kP*error+(error>0?100:-100)); //Proportunal controll with deadband correction
     }
 
-    
-    Serial.println(count);
-    setEffort(0);
+    setEffort(0); //Idle motor after
 }
