@@ -1,0 +1,13 @@
+#pragma once
+
+enum State {
+    IDLE,
+    FOLLOWTOLINE,
+    FOLLOWTOWALL,
+    DIMETOLINELEFT,
+    DIMETOLINERIGHT,
+    CENTERONJUNCT,
+    BACKFROMWALL,
+    PERMISSION
+};
+

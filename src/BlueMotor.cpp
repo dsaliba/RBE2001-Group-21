@@ -17,7 +17,7 @@ const float kP = 0.25;
 
 //A flattned matrix for relating the old and new values as indecies to the direction of encoding, (0) represents an uh-oh-spaghettio state
 //I chode (0) so that it gets ignored but I keep track of which states are bad so I can swap it out with a flag for testing
-int EncoderMatrix [16] = {0,-1,1,(2),1,0,(0),-1,-1,(0),0,1,(0),1,-1,0};
+int EncoderMatrix [16] = {0,-1,1,(0),1,0,(0),-1,-1,(0),0,1,(0),1,-1,0};
 
 BlueMotor::BlueMotor()
 {
