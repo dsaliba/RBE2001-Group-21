@@ -9,6 +9,7 @@ public:
     long getPosition();
     void reset();
     void setup();
+    bool moveOneStepTo(long position);
 
 private:
     void setEffort(int effort, bool clockwise);

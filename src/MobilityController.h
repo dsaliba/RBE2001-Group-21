@@ -6,6 +6,8 @@ class MobilityController {
     void update();
     void pause();
 
+    int getDistance();
+
   // private:
 
 };

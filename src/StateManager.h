@@ -11,6 +11,7 @@ class StateManager {
         void startTimer(long t);
         bool checkTimer();
         bool timerStarted();
+        int getTimerRemaining();
 
         
         bool flagA = false;

@@ -132,9 +132,36 @@ void MobilityController::update()
     }
     break;
 
+  //TODO: make these turns nonblocking if necisary
+  case (QUARTERTURNLEFT): //These turns are blocking however this should not be an issue
+    chassis.turnFor(86, 50, true);
+    stateManager.advanceState();
+    break;
+
+  case (QUARTERTURNRIGHT):
+    chassis.turnFor(-86, 50, true);
+    stateManager.advanceState();
+    break;
+  
+  case (FOLLOWTOSTAGING):
+    if (rangefinder.getDistance() < 7) //Arbitary value chosen via testing
+    {
+      stateManager.advanceState();
+    }
+    else
+    { //Proportional Line following
+      float error = analogRead(leftLightSensor) - analogRead(rightLightSensor);
+      chassis.setTwist(10, kLight * error);
+    }
+    break;
+
   case (IDLE):    //IDLE state, idles chassis
   default:        //NOTE: IDLE is the default state, this means if the robot is in a state the mobility controller doesnt recognise
                   //such as a state for grasping the panel, the chassis knows to idle
     chassis.idle();
   }
+}
+
+int MobilityController::getDistance() {
+  return rangefinder.getDistance();
 }

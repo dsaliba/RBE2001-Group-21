@@ -13,6 +13,8 @@ int qeNew = 0;
 
 const float kP = 0.25;
 
+const int fbtolerance = 15;
+
 //A flattned matrix for relating the old and new values as indecies to the direction of encoding, (0) represents an uh-oh-spaghettio state
 //I chode (0) so that it gets ignored but I keep track of which states are bad so I can swap it out with a flag for testing
 int EncoderMatrix [16] = {0,-1,1,(0),1,0,(0),-1,-1,(0),0,1,(0),1,-1,0};
@@ -104,8 +106,24 @@ void BlueMotor::moveTo(long target)  //Move to this encoder position within the 
 
     while (abs((target-count)) > tolerance) {   //Loop until close enough to destination TODO: decide if this should be blocking
         int error = target-count;
-        setEffort(kP*error+(error>0?100:-100)); //Proportunal controll with deadband correction
+        //This may look like a bang bang loop not proportunal, thats because our deadband is 99.99%
+        setEffort(kP*error+(error>0?400:-400)); //Proportunal controll with deadband correction
     }
 
-    setEffort(0); //Idle motor after
+    setEffort(0); //Idle motor after reaching destination
 }
+
+bool BlueMotor::moveOneStepTo(long target) {
+    if (abs((target-count)) > fbtolerance) {
+         int error = target-count;
+        //This may look like a bang bang loop not proportunal, thats because our deadband is 99.99%
+        setEffort(kP*error+(error>0?400:-400)); //Proportunal controll with deadband correction
+    }
+    else {
+        setEffort(0);
+        return true;
+    }
+    return false;
+}  
+
+
