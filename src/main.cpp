@@ -74,6 +74,24 @@ void update()
     }
     break;
 
+  case (CALIBRATION): //Wait for permision given via IR remote
+    if (decoder.getKeyCode() == remoteEnterSave)
+    {
+      Serial.println("go");
+      StateManager::get().advanceState();
+    }
+      if (buttonB.isPressed()) {
+    fourbar.setEffort(400);
+  } else if (buttonC.isPressed()){
+    fourbar.setEffort(-400);
+  } else {
+    fourbar.setEffort(0);
+  }
+  if (buttonA.isPressed()) {
+    Serial.println(fourbar.getPosition());
+  }
+    break;
+
   case (BUTTONPERMISSION):
     if (buttonA.isPressed()) {
       StateManager::get().advanceState();
@@ -84,10 +102,12 @@ void update()
 void loop()
 {
 
-  if (decoder.getKeyCode() == remoteSetup) {
-    Serial.print("State: ");
-    Serial.println(StateManager::get().getState());
-  }
+  // if (decoder.getKeyCode() == remoteSetup) {
+  //   Serial.print("State: ");
+  //   Serial.println(StateManager::get().getState());
+  // }
+
+    //Serial.println(mobilityController.getDistance());
 
   // if (decoder.getKeyCode()== remoteUp) {
   //   gripper.up();
@@ -104,15 +124,15 @@ void loop()
     mobilityController.pause();
     fourbar.pause();
 
-    Serial.println(paused);
+    Serial.println("ZUWARDO");
   }
 
   // if (buttonB.isPressed()) {
-  //   ffbMotor.setEffort(400);
+  //   fourbar.setEffort(400);
   // } else if (buttonC.isPressed()){
-  //   ffbMotor.setEffort(-400);
+  //   fourbar.setEffort(-400);
   // } else {
-  //   ffbMotor.setEffort(0);
+  //   fourbar.setEffort(0);
   // }
 
 
@@ -120,6 +140,7 @@ void loop()
   //   Serial.println(ffbMotor.getPosition());
   // }
 
+  //mobilityController.printLight();
   //call update if unpaused
   if (!paused)
   {

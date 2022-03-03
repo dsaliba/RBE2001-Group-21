@@ -10,11 +10,11 @@
 
 int pos = 1500;
 
-int openPos = 1400;
+int openPos = 1350;
 int closePos = 1700;
-int openPot = 275;
+int openPot = 280;
 //int closePot = 320;
-int closePot = 310;
+int closePot = 300;
 const int tolerance = 3;
 
 //199:1000
@@ -64,7 +64,7 @@ void Gripper::update()
             Serial.println(read());
             pos += 50;
             write(pos);
-            delay(100);
+            delay(50);
             
         break;
     case (RELEASE):     //Open gripper

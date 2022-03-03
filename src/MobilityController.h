@@ -5,8 +5,9 @@ class MobilityController {
     void init();
     void update();
     void pause();
+    void printLight();
 
-    int getDistance();
+    float getDistance();
 
   // private:
 

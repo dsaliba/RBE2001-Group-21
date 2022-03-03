@@ -6,37 +6,89 @@
 //boolean flags are also kept in this class in order to allow more data to be stored on a state by state basis.
 //state manager also handels timer logic
 
-#define length 5
+#define length 42
 
-//18
+
 // const State routine[length]{
-//     RELEASE,
-//     PERMISSION,
-//     FOLLOWTOSTAGING,
-//     GRIP,
-//     PERMISSION,
-//     FB25,
-//     BACKFROMWALL,
-//     QUARTERTURNLEFT,
-//     QUARTERTURNLEFT,
-//     QUARTERTURNLEFT,
-//     QUARTERTURNLEFT,
-//     PERMISSION,
-//     FOLLOWTOSTAGING,
-//     FBFLAT,
-//     CENTERONJUNCT,
-//     RELEASE,
-//     BACKFROMWALL,
-//     BACKFROMWALL  
-//};
+//     CALIBRATION,
+//     FOLLOWTOLINE,
+//     CENTERONJUNCT
+// };
+
+
 
 const State routine[length]{
-    PERMISSION,
+    RELEASE,
+    CALIBRATION,
     FB25,
     PERMISSION,
+    GRIP,
+    UNHOOK,
+    FBUNLATCH,
+    BACKFROMWALL,
+    DIMETOLINELEFT,
+    BACKFROMWALL,
+    FOLLOWTOLINE,
+    CENTERONJUNCT,
+    DIMETOLINERIGHT,
+    FOLLOWTOSTAGING,
     FBFLAT,
-    PERMISSION
+    RELEASE,
+    PERMISSION,
+    GRIP,
+    PERMISSION,
+    FBUNLATCH,
+    DIMETOLINELEFT,
+    BACKFROMWALL,
+    FOLLOWTOLINE,
+    CENTERONJUNCT,
+    DIMETOLINELEFT,
+    FOLLOWTO25,
+    FB25,
+    RELEASE,
+    FBUNLATCH,
+    PERMISSION,
+    BACKFROMWALL,
+    DIMETOLINELEFT,
+    FOLLOWTOLINE,
+    CENTERONJUNCT,
+    DIMETOLINERIGHT,
+    FOLLOWTOMID,
+    QUARTERTURNRIGHT,
+    FOLLOWTOLINE,
+    CENTERONJUNCT,
+    DIMETOLINERIGHT,
+    FOLLOWTOLINE,
+    FBFLAT
 };
+
+// const State routine[length]{
+//     RELEASE,
+//     CALIBRATION,
+//     FB25,
+//     PERMISSION,
+//     GRIP,
+//     PERMISSION,
+//     FBUNLATCH,
+//     BACKFROMWALL,
+//     DIMETOLINELEFT,
+//     FOLLOWTOSTAGING,
+//     FBFLAT,
+//     RELEASE,
+//     PERMISSION,
+//     GRIP,
+//     FBUNLATCH,
+//     BACKFROMWALL,
+//     DIMETOLINELEFT,
+//     FOLLOWTODEPO,
+//     FB25,
+//     RELEASE,
+//     FBUNLATCH,
+//     PERMISSION,
+//     BACKFROMWALL,
+//     DIMETOLINELEFT,
+//     FBFLAT
+// };
 
 
 //List of states in order for the master routine

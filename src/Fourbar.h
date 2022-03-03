@@ -7,4 +7,5 @@ class Fourbar {
         void setPosition(long pos);
         long getPosition();
         void pause();
+        void setEffort(int effort);
 };

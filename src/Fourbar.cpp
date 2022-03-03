@@ -6,9 +6,10 @@
 
 #define stateManager StateManager::get()
 
-const long pos25 = -6765;
+const long pos25 = -6916;
 
 const long pos45 = -5425;
+const long posUnlatch = -7800;
 
 const long tolerance = 15;
 
@@ -61,6 +62,12 @@ void Fourbar::update() {
         }
         break;
     
+    case (FBUNLATCH):
+    if (fbMotor.moveOneStepTo(posUnlatch)) {
+            stateManager.advanceState();
+        }
+        break;
+    
     default:
         break;
     }
@@ -68,4 +75,8 @@ void Fourbar::update() {
 
 void Fourbar::pause() {
     fbMotor.setEffort(0);
+}
+
+void Fourbar::setEffort(int effort) {
+    fbMotor.setEffort(effort);
 }

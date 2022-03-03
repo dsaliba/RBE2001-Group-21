@@ -33,6 +33,8 @@ void MobilityController::init()
   rangefinder.init();
 }
 
+
+
 //Loop update method, checks for what to do based on current state
 void MobilityController::update()
 {
@@ -42,19 +44,21 @@ void MobilityController::update()
   {
 
   case (FOLLOWTOLINE):  //Linefollow until a perpendicular junction is met
-    if ((analogRead(leftLightSensor) - analogRead(rightLightSensor) > 50) && (analogRead(rightLightSensor) > 600))  //True if at junction
+    //if (abs((analogRead(leftLightSensor) - analogRead(rightLightSensor)) < 50) && (analogRead(rightLightSensor) > 700))  //True if at junction
+    if (analogRead(leftLightSensor) > 650 && analogRead(rightLightSensor) > 650)
     {
       stateManager.advanceState();
     }
     else
     { //Proportunal Line following
       float error = analogRead(leftLightSensor) - analogRead(rightLightSensor);
-      chassis.setTwist(10, kLight * error);
+      chassis.setTwist(8, kLight * error);
     }
     break;
 
-  case (FOLLOWTOWALL):    //Line follow until the ultrasonic sensor detects something close
-    if (rangefinder.getDistance() < 12.7) //Arbitary value chosen via testing
+  case (FOLLOWTOMID):    //Line follow until the ultrasonic sensor detects something close
+    rangefinder.getDistance();
+    if (rangefinder.getDistance() < 9.3) //Arbitary value chosen via testing
     {
       stateManager.advanceState();
     }
@@ -73,7 +77,7 @@ void MobilityController::update()
       {
         stateManager.flagA = true;
       }
-      chassis.setMotorEfforts(-30, 30);
+      chassis.setMotorEfforts(-100, 100);
     }
     else
     { //Turn until right side aproaches a line (the result of these two blocks is centering over the line)
@@ -81,7 +85,7 @@ void MobilityController::update()
       {
         stateManager.advanceState();
       }
-      chassis.setMotorEfforts(-30, 30);
+      chassis.setMotorEfforts(-100, 100);
     }
     break;
 
@@ -92,7 +96,7 @@ void MobilityController::update()
       {
         stateManager.flagA = true;
       }
-      chassis.setMotorEfforts(30, -30);
+      chassis.setMotorEfforts(100, -100);
     }
     else
     {
@@ -100,7 +104,7 @@ void MobilityController::update()
       {
         stateManager.advanceState();
       }
-      chassis.setMotorEfforts(30, -30);
+      chassis.setMotorEfforts(100, -100 );
     }
     break;
 
@@ -108,7 +112,21 @@ void MobilityController::update()
     if (!stateManager.flagA)  //Right after advancing to this state configure timer
     {
       chassis.setTwist(10, 0);
-      stateManager.startTimer(900);
+      stateManager.startTimer(800);
+      stateManager.flagA = true;
+    }
+    if (stateManager.checkTimer())
+    { //After diriving straight for 900 ms advance state (value found through testing)
+      chassis.idle();
+      stateManager.advanceState();
+    }
+    break;
+
+    case (UNHOOK):     //Move from having light sensor over a line to having the center of the wheels over the line
+    if (!stateManager.flagA)  //Right after advancing to this state configure timer
+    {
+      chassis.setTwist(15, 0);
+      stateManager.startTimer(300);
       stateManager.flagA = true;
     }
     if (stateManager.checkTimer())
@@ -122,7 +140,7 @@ void MobilityController::update()
     if (!stateManager.flagA)  //Same timer logic as CENTERONJUNCT but driving backwards
     {
       chassis.setTwist(-10, 0);
-      stateManager.startTimer(526);
+      stateManager.startTimer(800);
       stateManager.flagA = true;
     }
     if (stateManager.checkTimer())
@@ -134,22 +152,61 @@ void MobilityController::update()
 
   //TODO: make these turns nonblocking if necisary
   case (QUARTERTURNLEFT): //These turns are blocking however this should not be an issue
-    chassis.turnFor(86, 50, true);
+    chassis.turnFor(90, 60, true);
     stateManager.advanceState();
     break;
 
   case (QUARTERTURNRIGHT):
-    chassis.turnFor(-86, 50, true);
+    chassis.turnFor(-90, 60, true);
     stateManager.advanceState();
     break;
   
   case (FOLLOWTOSTAGING):
-    if (rangefinder.getDistance() < 7) //Arbitary value chosen via testing
+  getDistance();
+        delay(10);
+        getDistance();
+    if (getDistance() < 7) //Arbitary value chosen via testing
     {
       stateManager.advanceState();
     }
     else
     { //Proportional Line following
+      float error = analogRead(leftLightSensor) - analogRead(rightLightSensor);
+      chassis.setTwist(10, kLight * error);
+    }
+    break;
+
+     case (FOLLOWTO25):
+      if (!stateManager.flagA) {
+        getDistance();
+        delay(10);
+        getDistance();
+        stateManager.flagA = true;
+      }
+      if (getDistance() < 14) //Arbitary value chosen via testing
+      {
+         stateManager.advanceState();
+       }
+    else
+      { //Proportional Line following
+      float error = analogRead(leftLightSensor) - analogRead(rightLightSensor);
+      chassis.setTwist(10, kLight * error);
+    }
+    break;
+
+    case (FOLLOWTODEPO):
+      if (!stateManager.flagA) {
+        getDistance();
+        delay(10);
+        getDistance();
+        stateManager.flagA = true;
+      }
+      if (getDistance() < 5.3) //Arbitary value chosen via testing
+      {
+         stateManager.advanceState();
+       }
+    else
+      { //Proportional Line following
       float error = analogRead(leftLightSensor) - analogRead(rightLightSensor);
       chassis.setTwist(10, kLight * error);
     }
@@ -162,6 +219,12 @@ void MobilityController::update()
   }
 }
 
-int MobilityController::getDistance() {
+float MobilityController::getDistance() {
   return rangefinder.getDistance();
+}
+
+void MobilityController::printLight() {
+  Serial.print(analogRead(leftLightSensor));
+  Serial.print(" : ");
+  Serial.println(analogRead(rightLightSensor));
 }
