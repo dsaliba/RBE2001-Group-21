@@ -6,7 +6,7 @@
 //boolean flags are also kept in this class in order to allow more data to be stored on a state by state basis.
 //state manager also handels timer logic
 
-#define length 42
+#define length 45
 
 
 // const State routine[length]{
@@ -15,22 +15,21 @@
 //     CENTERONJUNCT
 // };
 
-
-
+//45 (42)
 const State routine[length]{
     RELEASE,
     CALIBRATION,
-    FB25,
+    FB45,
     PERMISSION,
     GRIP,
     UNHOOK,
     FBUNLATCH,
     BACKFROMWALL,
-    DIMETOLINELEFT,
+    DIMETOLINERIGHT,
     BACKFROMWALL,
     FOLLOWTOLINE,
     CENTERONJUNCT,
-    DIMETOLINERIGHT,
+    DIMETOLINELEFT,
     FOLLOWTOSTAGING,
     FBFLAT,
     RELEASE,
@@ -38,29 +37,78 @@ const State routine[length]{
     GRIP,
     PERMISSION,
     FBUNLATCH,
-    DIMETOLINELEFT,
+    DIMETOLINERIGHT,
     BACKFROMWALL,
     FOLLOWTOLINE,
     CENTERONJUNCT,
-    DIMETOLINELEFT,
-    FOLLOWTO25,
-    FB25,
+    DIMETOLINERIGHT,
+    FOLLOWTO45,
+    BACKFROMWALL,
+    FOLLOWTO45,
+    FB45,
     RELEASE,
-    FBUNLATCH,
+    FB25,
     PERMISSION,
     BACKFROMWALL,
+    DIMETOLINERIGHT,
+    BACKFROMWALL,
+    FOLLOWTOLINE,
+    CENTERONJUNCT,
     DIMETOLINELEFT,
-    FOLLOWTOLINE,
-    CENTERONJUNCT,
-    DIMETOLINERIGHT,
     FOLLOWTOMID,
-    QUARTERTURNRIGHT,
+    QUARTERTURNLEFT,
     FOLLOWTOLINE,
     CENTERONJUNCT,
-    DIMETOLINERIGHT,
+    DIMETOLINELEFT,
     FOLLOWTOLINE,
     FBFLAT
 };
+
+//25 (42)
+// const State routine[length]{
+//     RELEASE,
+//     CALIBRATION,
+//     FB25,
+//     PERMISSION,
+//     GRIP,
+//     UNHOOK,
+//     FBUNLATCH,
+//     BACKFROMWALL,
+//     DIMETOLINELEFT,
+//     BACKFROMWALL,
+//     FOLLOWTOLINE,
+//     CENTERONJUNCT,
+//     DIMETOLINERIGHT,
+//     FOLLOWTOSTAGING,
+//     FBFLAT,
+//     RELEASE,
+//     PERMISSION,
+//     GRIP,
+//     PERMISSION,
+//     FBUNLATCH,
+//     DIMETOLINELEFT,
+//     BACKFROMWALL,
+//     FOLLOWTOLINE,
+//     CENTERONJUNCT,
+//     DIMETOLINELEFT,
+//     FOLLOWTO25,
+//     FB25,
+//     RELEASE,
+//     FBUNLATCH,
+//     PERMISSION,
+//     BACKFROMWALL,
+//     DIMETOLINELEFT,
+//     FOLLOWTOLINE,
+//     CENTERONJUNCT,
+//     DIMETOLINERIGHT,
+//     FOLLOWTOMID,
+//     QUARTERTURNRIGHT,
+//     FOLLOWTOLINE,
+//     CENTERONJUNCT,
+//     DIMETOLINERIGHT,
+//     FOLLOWTOLINE,
+//     FBFLAT
+// };
 
 // const State routine[length]{
 //     RELEASE,

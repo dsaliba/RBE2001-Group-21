@@ -8,8 +8,9 @@
 
 const long pos25 = -6916;
 
-const long pos45 = -5425;
+const long pos45 = -5293;
 const long posUnlatch = -7800;
+const long posUnlatch45 = -5600;
 
 const long tolerance = 15;
 
@@ -64,6 +65,12 @@ void Fourbar::update() {
     
     case (FBUNLATCH):
     if (fbMotor.moveOneStepTo(posUnlatch)) {
+            stateManager.advanceState();
+        }
+        break;
+
+        case (FBUNLATCH45):
+    if (fbMotor.moveOneStepTo(posUnlatch45)) {
             stateManager.advanceState();
         }
         break;

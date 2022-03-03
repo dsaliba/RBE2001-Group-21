@@ -7,6 +7,7 @@ enum State {
     FOLLOWTOMID,           //Line follow until ultrasonic detects an object
     FOLLOWTOSTAGING,
     FOLLOWTO25,
+    FOLLOWTO45,
     FOLLOWTODEPO,
     DIMETOLINELEFT,         //Turn inplace left until the light sensor is centered on a line
     DIMETOLINERIGHT,        //Turn inplace right until the light sensor is centered on a line
@@ -24,6 +25,7 @@ enum State {
     FBFLAT,
     FB45,
     FB25,
+    FBUNLATCH45,
     FBUNLATCH
 
 };

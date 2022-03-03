@@ -10,11 +10,11 @@
 
 int pos = 1500;
 
-int openPos = 1350;
-int closePos = 1700;
-int openPot = 280;
+int openPos = 1450;
+int closePos = 1750;
+int openPot = 277;
 //int closePot = 320;
-int closePot = 300;
+int closePot = 315;
 const int tolerance = 3;
 
 //199:1000

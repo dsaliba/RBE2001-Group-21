@@ -58,7 +58,7 @@ void MobilityController::update()
 
   case (FOLLOWTOMID):    //Line follow until the ultrasonic sensor detects something close
     rangefinder.getDistance();
-    if (rangefinder.getDistance() < 9.3) //Arbitary value chosen via testing
+    if (rangefinder.getDistance() < 8.5) //Arbitary value chosen via testing
     {
       stateManager.advanceState();
     }
@@ -184,6 +184,23 @@ void MobilityController::update()
         stateManager.flagA = true;
       }
       if (getDistance() < 14) //Arbitary value chosen via testing
+      {
+         stateManager.advanceState();
+       }
+    else
+      { //Proportional Line following
+      float error = analogRead(leftLightSensor) - analogRead(rightLightSensor);
+      chassis.setTwist(10, kLight * error);
+    }
+    break;
+    case (FOLLOWTO45):
+      if (!stateManager.flagA) {
+        getDistance();
+        delay(10);
+        getDistance();
+        stateManager.flagA = true;
+      }
+      if (getDistance() < 15.5) //Arbitary value chosen via testing
       {
          stateManager.advanceState();
        }
